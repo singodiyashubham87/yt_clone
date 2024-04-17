@@ -4,9 +4,13 @@ import { RxAvatar } from "react-icons/rx";
 import logo from "../assets/images/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../../redux/SidebarSlice";
-// import { useState } from "react";
 import { setSearchInput } from "../../redux/HeaderSlice";
-import { filterVideos } from "../../redux/BodySlice";
+import {
+  filterVideos,
+  setSearchedVideos,
+  setShowSearchedVideos,
+} from "../../redux/BodySlice";
+import { apiKey } from "../constants/API_CREDS";
 
 const Header = () => {
   const searchInput = useSelector((state) => state.headerSlice.searchInput);
@@ -22,6 +26,16 @@ const Header = () => {
 
   const filterAllVideos = () => {
     dispatch(filterVideos(searchInput));
+  };
+
+  const searchVideos = async () => {
+    if (searchInput.length > 0) dispatch(setShowSearchedVideos(true));
+    else dispatch(setShowSearchedVideos(false));
+    const res = await fetch(
+      `https://youtube.googleapis.com/youtube/v3/search?part=snippet,id&maxResults=20&q=${searchInput}&key=${apiKey}`
+    );
+    const data = await res.json();
+    dispatch(setSearchedVideos(data.items));
   };
 
   return (
@@ -40,8 +54,9 @@ const Header = () => {
           className="w-[50%] border-2 border-gray-300 px-2 pl-4 py-[0.5rem] rounded-l-full"
           onChange={handleSearchChange}
           onKeyDown={(e) => {
-            if (e.key === "Enter") {  
-              filterAllVideos();
+            if (e.key === "Enter") {
+              // filterAllVideos();
+              searchVideos();
             }
           }}
         />

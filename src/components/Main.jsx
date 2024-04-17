@@ -1,12 +1,12 @@
-import Body from "./Body";
 import Sidebar from "./Sidebar";
+import { Outlet } from "react-router-dom";
 
 const Main = () => {
   return (
     <>
-      <div className="flex w-full min-h-screen">
+      <div className="flex items-start">
         <Sidebar />
-        <Body />
+        <Outlet />
       </div>
     </>
   );

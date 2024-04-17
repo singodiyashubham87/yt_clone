@@ -8,13 +8,16 @@ const Sidebar = () => {
     "Explore",
     "Trending",
     "More",
+    "Explore",
+    "Trending",
+    "More",
   ]);
 
   const isOpen = useSelector((state) => state.sidebarSlice.isOpen);
   if (!isOpen) return null;
 
   return (
-    <div className="sideBar flex flex-col  text-[1.2rem] bg-[#5f5f5f]">
+    <div className="sideBar flex flex-col  text-[1.2rem] bg-[#5f5f5f] col-span-2">
       <ul className="bg-[#EEEEEE] px-8 py-2 flex gap-2 flex-col">
         <li>Home</li>
         <li>Shorts</li>

@@ -12,7 +12,7 @@ export default {
       },
       fontFamily: {
         primary: "Inter",
-        secondary: "Borel"
+        secondary: "Poppins"
       },
       screens: {
         xxl: "1751px",
@@ -21,6 +21,9 @@ export default {
         msm: "491px",
         vsm: "441px",
         vvsm: "351px",
+      },
+      boxShadow: {
+        mdm: "0 0 5px 2px rgba(0, 0, 0, 0.2)",
       },
     },
   },
