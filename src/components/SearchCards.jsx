@@ -16,6 +16,7 @@ const SearchCards = () => {
             publishedTime={video.snippet.publishedAt.slice(0, 10)}
             channelTitle={video.snippet.channelTitle}
             description={video.snippet.description}
+            kind={video.id.kind}
           />
         ))}
     </div>

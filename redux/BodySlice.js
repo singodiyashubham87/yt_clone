@@ -14,21 +14,12 @@ const BodySlice = createSlice({
     setFilteredVideos: (state, action) => {
       state.filteredVideos = action.payload;
     },
-    filterVideos: (state, action) => {
-      state.filteredVideos = state.allVideos.filter((video) =>
-        video.snippet.title.toLowerCase().includes(action.payload.toLowerCase())
-      );
-    },
     setSearchedVideos: (state, action) => {
       state.searchedVideos = action.payload;
     },
   },
 });
 
-export const {
-  setAllVideos,
-  setFilteredVideos,
-  filterVideos,
-  setSearchedVideos,
-} = BodySlice.actions;
+export const { setAllVideos, setFilteredVideos, setSearchedVideos } =
+  BodySlice.actions;
 export default BodySlice.reducer;
