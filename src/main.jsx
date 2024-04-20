@@ -4,12 +4,19 @@ import App from "./App";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 import "./index.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SearchCards from "./components/SearchCards";
 
 function main() {
   return (
     <React.StrictMode>
       <Provider store={store}>
-        <App />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/search/:videoId" element={<SearchCards />} />
+          </Routes>
+        </BrowserRouter>
       </Provider>
     </React.StrictMode>
   );

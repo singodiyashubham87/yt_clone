@@ -14,6 +14,7 @@ const ButtonsList = () => {
     "Spotlight",
     "360",
     "Video",
+    "VR",
   ]);
 
   return (

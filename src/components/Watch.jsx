@@ -16,7 +16,6 @@ const Watch = () => {
         `https://www.googleapis.com/youtube/v3/videos?key=${apiKey}&part=snippet,statistics,id&id=R0_ZzOrucI0&regionCode=IN&maxResults=10`
       );
       const data = await res.json();
-      console.log(data.items[0]);
       setVideoDetails(data.items[0]);
     }
     fetchYtData();
