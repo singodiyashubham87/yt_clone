@@ -1,10 +1,7 @@
 import { useSelector } from "react-redux";
 import SearchCard from "./SearchCard";
-import { useParams } from "react-router-dom";
 
 const SearchCards = () => {
-  const { videoId } = useParams();
-  console.log(videoId);
   const searchedVideos = useSelector((state) => state.bodySlice.searchedVideos);
 
   return (
