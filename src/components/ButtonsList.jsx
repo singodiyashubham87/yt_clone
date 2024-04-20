@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Button from "./Button";
 
 const ButtonsList = () => {
   const [btns] = useState([
@@ -18,9 +17,14 @@ const ButtonsList = () => {
   ]);
 
   return (
-    <div className="flex px-[6rem] pt-4 gap-4">
+    <div className="flex px-[6rem] pt-4 gap-4 items-center justify-center">
       {btns.map((btn, i) => (
-        <Button key={i} btnText={btn} />
+        <h1
+          key={i}
+          className="bg-gray-300 px-4 py-2 rounded-lg text-lg font-primary hover:bg-gray-400 cursor-pointer"
+        >
+          {btn}
+        </h1>
       ))}
     </div>
   );

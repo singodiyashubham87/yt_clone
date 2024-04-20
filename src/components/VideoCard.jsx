@@ -12,7 +12,6 @@ const VideoCard = ({ videoId, videoTitle, channelTitle, views, thumbnail }) => {
             className="w-[20rem] h-[12rem] cursor-pointer rounded-xl"
           />
         </Link>
-        {/* <video src={`https://www.youtube.com/watch?v=${videoId}`} className="w-[16rem] h-[9rem]"></video> */}
         <div className="videoDetails flex">
           <img src="" alt="" />
           <div className="flex flex-col">

@@ -1,27 +1,27 @@
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { setSearchInput } from "../../redux/HeaderSlice";
+import { toggleSidebar } from "../../redux/SidebarSlice";
+import useSearchSuggestions from "../hooks/useSearchSuggestions";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { RxAvatar } from "react-icons/rx";
 import logo from "../assets/images/logo.png";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleSidebar } from "../../redux/SidebarSlice";
-import { setSearchInput } from "../../redux/HeaderSlice";
-import { Link, useNavigate } from "react-router-dom";
-import { setSearchedVideos } from "../../redux/BodySlice";
-import {
-  YT_SEARCH_RESULTS_API,
-  YT_SEARCH_SUGGESTION_API,
-} from "../constants/APIs";
-import { useEffect, useState } from "react";
-import { setSearchCache } from "../../redux/SearchSlice";
 import Loader from "./Loader";
+import useSearchResult from "../hooks/useSearchResult";
 
 const Header = () => {
+  const inputRef = useRef(null);
+  const suggestionRef = useRef(null);
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const [searchSuggestions, setSearchSuggestions] = useState([]);
   const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
   const searchInput = useSelector((state) => state.headerSlice.searchInput);
   const searchCache = useSelector((store) => store.searchSlice);
+  const fetchSearchSuggestions = useSearchSuggestions(setSearchSuggestions);
+  const fetchSearchResult = useSearchResult(setLoader);
 
   const dispatch = useDispatch();
   const handleHamburgerClick = () => {
@@ -32,39 +32,38 @@ const Header = () => {
     dispatch(setSearchInput(e.target.value));
   };
 
-  const searchVideos = async () => {
-    if (searchInput.length < 1) {
-      navigate("/");
-      return;
-    }
-    setLoader(true);
-    const res = await fetch(`${YT_SEARCH_RESULTS_API}${searchInput}`);
-    const data = await res.json();
-    dispatch(setSearchedVideos(data.items));
-    setLoader(false);
-    navigate(`/search/${searchInput}`);
-  };
-
-  async function getSearchResult() {
-    const res = await fetch(`${YT_SEARCH_SUGGESTION_API}${searchInput}`);
-    const data = await res.json();
-    setSearchSuggestions(data[1]);
-    dispatch(setSearchCache({[searchInput]:data[1]}));
-  }
-
+  //Deboucing in search functionality
   useEffect(() => {
     const timer = setTimeout(() => {
       if (searchCache[searchInput]) {
         setSearchSuggestions(searchCache[searchInput]);
       } else {
-        getSearchResult();
+        fetchSearchSuggestions();
       }
     }, 200);
-    return function () {
-      clearTimeout(timer);
+    return () => clearTimeout(timer);
+  }, [searchInput, searchCache, fetchSearchSuggestions]);
+
+  //Hide suggestions when clicking outside the input and suggestions div
+  useEffect(() => {
+    // Event listener to hide suggestions when clicking outside the input and suggestions div
+    const handleClickOutside = (event) => {
+      if (
+        inputRef.current &&
+        !inputRef.current.contains(event.target) &&
+        suggestionRef.current &&
+        !suggestionRef.current.contains(event.target)
+      ) {
+        setShowSearchSuggestions(false);
+      }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchInput]);
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -85,24 +84,45 @@ const Header = () => {
               placeholder="Search"
               className="w-[40rem] border-2 border-gray-300 px-2 pl-4 py-[0.5rem] rounded-l-full active:"
               onChange={handleSearchChange}
+              ref={inputRef}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  searchVideos();
+                  if (searchInput.length < 0) {
+                    navigate("/");
+                  } else {
+                    setShowSearchSuggestions(false);
+                    fetchSearchResult();
+                  }
                 }
               }}
               onFocus={() => setShowSearchSuggestions(true)}
-              onBlur={() => setShowSearchSuggestions(false)}
             />
             <FaMagnifyingGlass
               className="text-gray-400 text-[2.7rem] border-2 border-gray-300 rounded-r-full p-2"
-              onClick={searchVideos}
+              onClick={() => {
+                if (searchInput.length < 0) {
+                  navigate("/");
+                } else {
+                  fetchSearchResult();
+                }
+              }}
             />
             {showSearchSuggestions && (
-              <div className="absolute top-[3rem] bg-gray-100 w-full rounded-2xl">
+              <div
+                className="absolute top-[3rem] bg-gray-100 w-full rounded-2xl"
+                ref={suggestionRef}
+              >
                 <div className="item">
                   {searchSuggestions &&
                     searchSuggestions.map((searchRes, i) => (
-                      <div key={i} className="flex items-center gap-4 p-4 pt-2">
+                      <div
+                        key={i}
+                        className="flex items-center gap-4 p-4 py-2 hover:bg-gray-200 cursor-pointer"
+                        onClick={() => {
+                          setShowSearchSuggestions(false);
+                          fetchSearchResult(searchRes);
+                        }}
+                      >
                         <FaMagnifyingGlass />
                         <h6>{searchRes}</h6>
                       </div>
