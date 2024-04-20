@@ -5,6 +5,7 @@ import logo from "../assets/images/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../../redux/SidebarSlice";
 import { setSearchInput } from "../../redux/HeaderSlice";
+import { Link } from "react-router-dom";
 import {
   filterVideos,
   setSearchedVideos,
@@ -39,13 +40,15 @@ const Header = () => {
   };
 
   return (
-    <nav className="navbar grid grid-flow-col">
+    <nav className="navbar grid grid-flow-col w-full">
       <div className="flex gap-4 items-center ml-4 col-span-1">
         <GiHamburgerMenu
           className="text-2xl cursor-pointer"
           onClick={handleHamburgerClick}
         />
-        <img src={logo} alt="yt_logo" className="h-[4rem]" />
+        <Link to="/">
+          <img src={logo} alt="yt_logo" className="h-[4rem]" />
+        </Link>
       </div>
       <div className="searchBar flex col-span-10 h-8 justify-center mt-4 items-center">
         <input

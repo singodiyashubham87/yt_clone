@@ -1,8 +1,14 @@
+import React from "react";
+import { createRoot } from "react-dom/client";
+// import App from "./App";
+import { Provider } from "react-redux";
+import store from "../redux/store";
+import "./index.css";
+import SearchCards from "./components/SearchCards";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Header from "./components/Header";
 import Main from "./components/Main";
-import Body from "./components/Body";
 import Watch from "./components/Watch";
+import Body from "./components/Body";
 
 function App() {
   const router = createBrowserRouter([
@@ -15,19 +21,28 @@ function App() {
           element: <Body />,
         },
         {
-          path: "/watch/:id",
+          path: "watch/:id",
           element: <Watch />,
         },
       ],
     },
+    {
+      path: "/search/:videoId",
+      element: <SearchCards />,
+    },
   ]);
 
   return (
-    <>
-      <Header />
-      <RouterProvider router={router} />
-    </>
+    <React.StrictMode>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </React.StrictMode>
   );
 }
+
+const root = createRoot(document.getElementById("root"));
+
+root.render(<App/>);
 
 export default App;
