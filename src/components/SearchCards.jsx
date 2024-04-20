@@ -8,7 +8,7 @@ const SearchCards = () => {
   const searchedVideos = useSelector((state) => state.bodySlice.searchedVideos);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 p-4">
       {searchedVideos &&
         searchedVideos.map((video) => (
           <SearchCard

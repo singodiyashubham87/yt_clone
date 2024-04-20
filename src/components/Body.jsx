@@ -5,13 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAllVideos } from "../../redux/BodySlice";
 import { setFilteredVideos } from "../../redux/BodySlice";
 import ButtonsList from "./ButtonsList";
-import SearchCards from "./SearchCards";
 
 const Body = () => {
   const filteredVideos = useSelector((state) => state.bodySlice.filteredVideos);
-  const showSearchedVideos = useSelector(
-    (state) => state.bodySlice.showSearchedVideos
-  );
 
   const dispatch = useDispatch();
 
@@ -32,10 +28,7 @@ const Body = () => {
       <div className="flex flex-col">
         <ButtonsList />
         <div className="flex flex-wrap gap-[2rem] p-8  justify-center">
-          {showSearchedVideos ? (
-            <SearchCards />
-          ) : (
-            filteredVideos &&
+          {filteredVideos &&
             filteredVideos.map((video) => (
               <VideoCard
                 key={video?.id}
@@ -45,8 +38,7 @@ const Body = () => {
                 views={video?.statistics?.viewCount}
                 thumbnail={video?.snippet?.thumbnails?.maxres?.url}
               />
-            ))
-          )}
+            ))}
         </div>
       </div>
     </>

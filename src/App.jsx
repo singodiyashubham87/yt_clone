@@ -1,14 +1,13 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-// import App from "./App";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "../redux/store";
-import "./index.css";
 import SearchCards from "./components/SearchCards";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Main from "./components/Main";
 import Watch from "./components/Watch";
 import Body from "./components/Body";
+import "./index.css";
 
 function App() {
   const router = createBrowserRouter([
@@ -24,11 +23,11 @@ function App() {
           path: "watch/:id",
           element: <Watch />,
         },
+        {
+          path: "/search/:videoId",
+          element: <SearchCards />,
+        },
       ],
-    },
-    {
-      path: "/search/:videoId",
-      element: <SearchCards />,
     },
   ]);
 
@@ -43,6 +42,6 @@ function App() {
 
 const root = createRoot(document.getElementById("root"));
 
-root.render(<App/>);
+root.render(<App />);
 
 export default App;

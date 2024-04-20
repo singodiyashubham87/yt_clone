@@ -5,15 +5,12 @@ import logo from "../assets/images/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../../redux/SidebarSlice";
 import { setSearchInput } from "../../redux/HeaderSlice";
-import { Link } from "react-router-dom";
-import {
-  filterVideos,
-  setSearchedVideos,
-  setShowSearchedVideos,
-} from "../../redux/BodySlice";
+import { Link, useNavigate } from "react-router-dom";
+import { filterVideos, setSearchedVideos } from "../../redux/BodySlice";
 import { apiKey } from "../constants/API_CREDS";
 
 const Header = () => {
+  const navigate = useNavigate();
   const searchInput = useSelector((state) => state.headerSlice.searchInput);
 
   const dispatch = useDispatch();
@@ -30,13 +27,13 @@ const Header = () => {
   };
 
   const searchVideos = async () => {
-    if (searchInput.length > 0) dispatch(setShowSearchedVideos(true));
-    else dispatch(setShowSearchedVideos(false));
+    if (searchInput.length < 1) return;
     const res = await fetch(
       `https://youtube.googleapis.com/youtube/v3/search?part=snippet,id&maxResults=20&q=${searchInput}&key=${apiKey}`
     );
     const data = await res.json();
     dispatch(setSearchedVideos(data.items));
+    navigate(`/search/${searchInput}`);
   };
 
   return (

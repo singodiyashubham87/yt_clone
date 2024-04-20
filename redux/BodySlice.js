@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const BodySlice = createSlice({
   name: "body",
   initialState: {
-    showSearchedVideos: false,
     allVideos: [],
     filteredVideos: [],
     searchedVideos: [],
@@ -20,15 +19,16 @@ const BodySlice = createSlice({
         video.snippet.title.toLowerCase().includes(action.payload.toLowerCase())
       );
     },
-    setShowSearchedVideos: (state,action) => {
-      state.showSearchedVideos = action.payload;
-    },
     setSearchedVideos: (state, action) => {
       state.searchedVideos = action.payload;
     },
   },
 });
 
-export const { setAllVideos, setFilteredVideos, filterVideos, setShowSearchedVideos,setSearchedVideos } =
-  BodySlice.actions;
+export const {
+  setAllVideos,
+  setFilteredVideos,
+  filterVideos,
+  setSearchedVideos,
+} = BodySlice.actions;
 export default BodySlice.reducer;
