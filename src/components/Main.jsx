@@ -7,7 +7,7 @@ const Main = () => {
     <>
       <div className="flex flex-col items-start">
         <Header />
-        <div className="flex">
+        <div className="flex w-full">
           <Sidebar />
           <Outlet />
         </div>

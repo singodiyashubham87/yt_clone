@@ -18,7 +18,7 @@ const VideoCard = ({ videoId, videoTitle, channelTitle, views, thumbnail }) => {
             <h4>{videoTitle?.slice(0, 30)}</h4>
             <p>{channelTitle}</p>
             <div className="subDetails flex">
-              <p>{views?views.slice(0, -3):"100k"}K views</p>
+              <p>{views?views.slice(0, -3):"100"}K views</p>
               {/* <p>{timestamp}</p> */}
             </div>
           </div>

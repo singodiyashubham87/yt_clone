@@ -3,16 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const BodySlice = createSlice({
   name: "body",
   initialState: {
-    allVideos: [],
-    filteredVideos: [],
+    homePageVideos: [],
     searchedVideos: [],
   },
   reducers: {
-    setAllVideos: (state, action) => {
-      state.allVideos = action.payload;
-    },
-    setFilteredVideos: (state, action) => {
-      state.filteredVideos = action.payload;
+    setHomePageVideos: (state, action) => {
+      state.homePageVideos = action.payload;
     },
     setSearchedVideos: (state, action) => {
       state.searchedVideos = action.payload;
@@ -20,6 +16,5 @@ const BodySlice = createSlice({
   },
 });
 
-export const { setAllVideos, setFilteredVideos, setSearchedVideos } =
-  BodySlice.actions;
+export const { setHomePageVideos, setSearchedVideos } = BodySlice.actions;
 export default BodySlice.reducer;

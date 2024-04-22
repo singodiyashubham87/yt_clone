@@ -133,7 +133,9 @@ const Header = () => {
           </div>
         </div>
         <div className="userAvatar flex items-center justify-end mr-8">
-          <RxAvatar className="text-[2.5rem]" />
+          <Link to={"/user"}>
+            <RxAvatar className="text-[2.5rem]" />
+          </Link>
         </div>
       </nav>
       {loader && <Loader />}

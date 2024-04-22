@@ -6,3 +6,4 @@ export const YT_SEARCH_RESULTS_API = `https://youtube.googleapis.com/youtube/v3/
 // export const YT_SEARCH_RESULTS_API = `https://youtube.googleapis.com/youtube/v3/search?part=snippet,id&maxResults=20&key=${apiKey}&q=SEARCH_QUERY`;
 export const YT_MOST_POPULAR_VIDEOS_API = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,id&chart=mostPopular&regionCode=IN&maxResults=20&key=${apiKey}`;
 // export const YT_MOST_POPULAR_VIDEOS_API = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,id&chart=mostPopular&regionCode=IN&maxResults=20&key=API_KEY`;
+export const YT_KEYWORD_SEARCH_API = `https://www.googleapis.com/youtube/v3/search?part=snippet,id&regionCode=IN&maxResults=20&key=${apiKey}&q=`;

@@ -7,6 +7,7 @@ import SearchCards from "./components/SearchCards";
 import Main from "./components/Main";
 import Watch from "./components/Watch";
 import Body from "./components/Body";
+import UserPage from "./components/UserPage";
 import "./index.css";
 
 function App() {
@@ -26,6 +27,10 @@ function App() {
         {
           path: "/search/:videoId",
           element: <SearchCards />,
+        },
+        {
+          path: "/user",
+          element: <UserPage />,
         },
       ],
     },
